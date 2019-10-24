@@ -1,0 +1,83 @@
+-- DDL
+
+CREATE TABLE hm_contato (
+ cod_contato FLOAT NOT NULL,
+ st_assunto VARCHAR2(50) NOT NULL,
+ st_conteudo CLOB NOT NULL,
+ dt_envio DATE NOT NULL,
+ dt_leitura DATE,
+ st_resposta CLOB,
+ hm_usuario_cod_usuario FLOAT NOT NULL
+);
+ALTER TABLE hm_contato ADD CONSTRAINT hm_contato_pk PRIMARY KEY ( cod_contato );
+CREATE TABLE hm_pergunta_inedita (
+ cod_pergunta FLOAT NOT NULL,
+ st_descricao CLOB NOT NULL,
+ dt_envio DATE NOT NULL,
+ dt_leitura DATE,
+ st_resultado CLOB,
+ hm_usuario_cod_usuario FLOAT NOT NULL
+);
+ALTER TABLE hm_pergunta_inedita ADD CONSTRAINT hm_pergunta_inedita_pk PRIMARY KEY
+( cod_pergunta );
+CREATE TABLE hm_post (
+ cod_post FLOAT NOT NULL,
+ st_tipo VARCHAR2(50) NOT NULL,
+ dt_postagem DATE NOT NULL,
+ st_titulo VARCHAR2(50) NOT NULL,
+ st_conteudo CLOB NOT NULL,
+ hm_usuario_cod_usuario FLOAT NOT NULL
+);
+ALTER TABLE hm_post ADD CONSTRAINT hm_post_pk PRIMARY KEY ( cod_post );
+CREATE TABLE hm_usuario (
+ cod_usuario FLOAT NOT NULL,
+ dt_nascimento DATE NOT NULL,
+ nr_telefone VARCHAR2(30) NOT NULL,
+ st_email VARCHAR2(30) NOT NULL,
+ st_senha VARCHAR2(130) NOT NULL,
+ st_adm CHAR(1) NOT NULL,
+ st_nome VARCHAR2(100) NOT NULL
+);
+ALTER TABLE hm_usuario ADD CONSTRAINT hm_usuario_pk PRIMARY KEY ( cod_usuario );
+ALTER TABLE hm_contato
+ ADD CONSTRAINT hm_c_hm_u_fk FOREIGN KEY ( hm_usuario_cod_usuario )
+ REFERENCES hm_usuario ( cod_usuario );
+ALTER TABLE hm_post
+ ADD CONSTRAINT hm_p_hm_u_fk FOREIGN KEY ( hm_usuario_cod_usuario )
+ REFERENCES hm_usuario ( cod_usuario );
+ALTER TABLE hm_pergunta_inedita
+ ADD CONSTRAINT hm_p_i_hm_u_fk FOREIGN KEY ( hm_usuario_cod_usuario )
+ REFERENCES hm_usuario ( cod_usuario );
+ 
+ --DML
+ 
+ INSERT INTO HM_USUARIO
+VALUES (104, '02/05/1990', '011986459733', 'flackjack@gmail.com', 'u0w3#e456', 't', 'Jack Flack');
+INSERT INTO HM_USUARIO
+VALUES (103, '23/05/1995', '01196682256', 'jack@china.com', 'turnaround123', 'f', 'Jack Chan');
+INSERT INTO HM_USUARIO
+VALUES (102, '11/11/1995', '01196533256', 'catalina@dub.com', 's0nh0', 'f', 'Catalina Lina');
+INSERT INTO HM_PERGUNTA_INEDITA (cod_pergunta, st_descricao, dt_envio,
+hm_usuario_cod_usuario)
+VALUES (212, 'Como resolver função exponencial?', '06/07/2019', 102);
+INSERT INTO HM_PERGUNTA_INEDITA
+VALUES (213, 'Como resolver função modular?', '06/07/2019', '10/10/2019', 'Pergunta fora do escopo
+do projeto', 102);
+INSERT INTO HM_PERGUNTA_INEDITA
+VALUES (214, 'Funções de terceiro grau?', '08/08/2019', '23/08/2019', 'Pergunta enviada para
+implementação', 103);
+INSERT INTO HM_POST
+VALUES (302, 'atualização', '06/07/2019', 'Atualização 1.2.2', 'Lorem ipsum dolor sit amet, consectetur
+adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua', 104);
+INSERT INTO HM_POST
+VALUES (303, 'reportagem', '28/07/2019', 'Chatbots na educação', 'Lorem ipsum dolor sit amet,
+consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua', 104);
+INSERT INTO HM_CONTATO (cod_contato, st_assunto, st_conteudo, dt_envio,
+hm_usuario_cod_usuario) 
+VALUES (410, 'dúvida', 'Lorem Ipsum. Lorem. Lorem Ipsum', '14/08/2019', 104);
+INSERT INTO HM_CONTATO
+VALUES (411, 'proposta', 'Lorem Ipsum. Lorem. Lorem Ipsum', '28/07/2019', '28/07/2019', 'Lorem
+Ipsum. Lorem. Lorem Ipsum', 104);
+INSERT INTO HM_CONTATO
+VALUES (412, 'dá pra mudar a voz do chat?', 'Lorem Ipsum. Lorem. Lorem Ipsum', '04/07/2019',
+'05/07/2019', 'Lorem Ipsum. Lorem. Lorem Ipsum', 104); 
