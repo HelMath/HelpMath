@@ -47,4 +47,4 @@ vista as inúmeras possibilidades que esse recurso oferece, futuramente poderá
 ser aperfeiçoado e ajustado para outros assuntos ou matérias. 
 
 As tecnologias utilizadas :
-IBM Watson
+IBM Speech-to-Text, IBM Text-to-Speech, IBM Watson
